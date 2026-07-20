@@ -1,10 +1,6 @@
-import {
-  IsEmail,
-  IsNotEmpty,
-} from 'class-validator';
+import { IsEmail, IsNotEmpty, IsUrl } from 'class-validator';
 
 export class CreateApplicationDto {
-
   @IsNotEmpty()
   fullName: string;
 
@@ -13,4 +9,7 @@ export class CreateApplicationDto {
 
   @IsNotEmpty()
   phone: string;
+
+  @IsUrl()
+  resumeFileName: string;
 }

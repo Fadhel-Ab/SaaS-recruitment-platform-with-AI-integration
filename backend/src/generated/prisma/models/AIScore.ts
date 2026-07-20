@@ -45,6 +45,7 @@ export type AIScoreMinAggregateOutputType = {
   interviewScore: number | null
   overallScore: number | null
   summary: string | null
+  recommendation: string | null
   createdAt: Date | null
 }
 
@@ -55,6 +56,7 @@ export type AIScoreMaxAggregateOutputType = {
   interviewScore: number | null
   overallScore: number | null
   summary: string | null
+  recommendation: string | null
   createdAt: Date | null
 }
 
@@ -64,7 +66,10 @@ export type AIScoreCountAggregateOutputType = {
   cvScore: number
   interviewScore: number
   overallScore: number
+  strengths: number
+  weaknesses: number
   summary: number
+  recommendation: number
   createdAt: number
   _all: number
 }
@@ -89,6 +94,7 @@ export type AIScoreMinAggregateInputType = {
   interviewScore?: true
   overallScore?: true
   summary?: true
+  recommendation?: true
   createdAt?: true
 }
 
@@ -99,6 +105,7 @@ export type AIScoreMaxAggregateInputType = {
   interviewScore?: true
   overallScore?: true
   summary?: true
+  recommendation?: true
   createdAt?: true
 }
 
@@ -108,7 +115,10 @@ export type AIScoreCountAggregateInputType = {
   cvScore?: true
   interviewScore?: true
   overallScore?: true
+  strengths?: true
+  weaknesses?: true
   summary?: true
+  recommendation?: true
   createdAt?: true
   _all?: true
 }
@@ -203,9 +213,12 @@ export type AIScoreGroupByOutputType = {
   id: string
   applicationId: string
   cvScore: number
-  interviewScore: number
+  interviewScore: number | null
   overallScore: number
+  strengths: runtime.JsonValue
+  weaknesses: runtime.JsonValue
   summary: string
+  recommendation: string
   createdAt: Date
   _count: AIScoreCountAggregateOutputType | null
   _avg: AIScoreAvgAggregateOutputType | null
@@ -236,9 +249,12 @@ export type AIScoreWhereInput = {
   id?: Prisma.StringFilter<"AIScore"> | string
   applicationId?: Prisma.StringFilter<"AIScore"> | string
   cvScore?: Prisma.FloatFilter<"AIScore"> | number
-  interviewScore?: Prisma.FloatFilter<"AIScore"> | number
+  interviewScore?: Prisma.FloatNullableFilter<"AIScore"> | number | null
   overallScore?: Prisma.FloatFilter<"AIScore"> | number
+  strengths?: Prisma.JsonFilter<"AIScore">
+  weaknesses?: Prisma.JsonFilter<"AIScore">
   summary?: Prisma.StringFilter<"AIScore"> | string
+  recommendation?: Prisma.StringFilter<"AIScore"> | string
   createdAt?: Prisma.DateTimeFilter<"AIScore"> | Date | string
   application?: Prisma.XOR<Prisma.ApplicationScalarRelationFilter, Prisma.ApplicationWhereInput>
 }
@@ -247,9 +263,12 @@ export type AIScoreOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   applicationId?: Prisma.SortOrder
   cvScore?: Prisma.SortOrder
-  interviewScore?: Prisma.SortOrder
+  interviewScore?: Prisma.SortOrderInput | Prisma.SortOrder
   overallScore?: Prisma.SortOrder
+  strengths?: Prisma.SortOrder
+  weaknesses?: Prisma.SortOrder
   summary?: Prisma.SortOrder
+  recommendation?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   application?: Prisma.ApplicationOrderByWithRelationInput
 }
@@ -261,9 +280,12 @@ export type AIScoreWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.AIScoreWhereInput[]
   NOT?: Prisma.AIScoreWhereInput | Prisma.AIScoreWhereInput[]
   cvScore?: Prisma.FloatFilter<"AIScore"> | number
-  interviewScore?: Prisma.FloatFilter<"AIScore"> | number
+  interviewScore?: Prisma.FloatNullableFilter<"AIScore"> | number | null
   overallScore?: Prisma.FloatFilter<"AIScore"> | number
+  strengths?: Prisma.JsonFilter<"AIScore">
+  weaknesses?: Prisma.JsonFilter<"AIScore">
   summary?: Prisma.StringFilter<"AIScore"> | string
+  recommendation?: Prisma.StringFilter<"AIScore"> | string
   createdAt?: Prisma.DateTimeFilter<"AIScore"> | Date | string
   application?: Prisma.XOR<Prisma.ApplicationScalarRelationFilter, Prisma.ApplicationWhereInput>
 }, "id" | "applicationId">
@@ -272,9 +294,12 @@ export type AIScoreOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   applicationId?: Prisma.SortOrder
   cvScore?: Prisma.SortOrder
-  interviewScore?: Prisma.SortOrder
+  interviewScore?: Prisma.SortOrderInput | Prisma.SortOrder
   overallScore?: Prisma.SortOrder
+  strengths?: Prisma.SortOrder
+  weaknesses?: Prisma.SortOrder
   summary?: Prisma.SortOrder
+  recommendation?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.AIScoreCountOrderByAggregateInput
   _avg?: Prisma.AIScoreAvgOrderByAggregateInput
@@ -290,18 +315,24 @@ export type AIScoreScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"AIScore"> | string
   applicationId?: Prisma.StringWithAggregatesFilter<"AIScore"> | string
   cvScore?: Prisma.FloatWithAggregatesFilter<"AIScore"> | number
-  interviewScore?: Prisma.FloatWithAggregatesFilter<"AIScore"> | number
+  interviewScore?: Prisma.FloatNullableWithAggregatesFilter<"AIScore"> | number | null
   overallScore?: Prisma.FloatWithAggregatesFilter<"AIScore"> | number
+  strengths?: Prisma.JsonWithAggregatesFilter<"AIScore">
+  weaknesses?: Prisma.JsonWithAggregatesFilter<"AIScore">
   summary?: Prisma.StringWithAggregatesFilter<"AIScore"> | string
+  recommendation?: Prisma.StringWithAggregatesFilter<"AIScore"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"AIScore"> | Date | string
 }
 
 export type AIScoreCreateInput = {
   id?: string
   cvScore: number
-  interviewScore: number
+  interviewScore?: number | null
   overallScore: number
+  strengths: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  weaknesses: Prisma.JsonNullValueInput | runtime.InputJsonValue
   summary: string
+  recommendation: string
   createdAt?: Date | string
   application: Prisma.ApplicationCreateNestedOneWithoutAiScoreInput
 }
@@ -310,18 +341,24 @@ export type AIScoreUncheckedCreateInput = {
   id?: string
   applicationId: string
   cvScore: number
-  interviewScore: number
+  interviewScore?: number | null
   overallScore: number
+  strengths: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  weaknesses: Prisma.JsonNullValueInput | runtime.InputJsonValue
   summary: string
+  recommendation: string
   createdAt?: Date | string
 }
 
 export type AIScoreUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   cvScore?: Prisma.FloatFieldUpdateOperationsInput | number
-  interviewScore?: Prisma.FloatFieldUpdateOperationsInput | number
+  interviewScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   overallScore?: Prisma.FloatFieldUpdateOperationsInput | number
+  strengths?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  weaknesses?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   summary?: Prisma.StringFieldUpdateOperationsInput | string
+  recommendation?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   application?: Prisma.ApplicationUpdateOneRequiredWithoutAiScoreNestedInput
 }
@@ -330,9 +367,12 @@ export type AIScoreUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   applicationId?: Prisma.StringFieldUpdateOperationsInput | string
   cvScore?: Prisma.FloatFieldUpdateOperationsInput | number
-  interviewScore?: Prisma.FloatFieldUpdateOperationsInput | number
+  interviewScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   overallScore?: Prisma.FloatFieldUpdateOperationsInput | number
+  strengths?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  weaknesses?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   summary?: Prisma.StringFieldUpdateOperationsInput | string
+  recommendation?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -340,18 +380,24 @@ export type AIScoreCreateManyInput = {
   id?: string
   applicationId: string
   cvScore: number
-  interviewScore: number
+  interviewScore?: number | null
   overallScore: number
+  strengths: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  weaknesses: Prisma.JsonNullValueInput | runtime.InputJsonValue
   summary: string
+  recommendation: string
   createdAt?: Date | string
 }
 
 export type AIScoreUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   cvScore?: Prisma.FloatFieldUpdateOperationsInput | number
-  interviewScore?: Prisma.FloatFieldUpdateOperationsInput | number
+  interviewScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   overallScore?: Prisma.FloatFieldUpdateOperationsInput | number
+  strengths?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  weaknesses?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   summary?: Prisma.StringFieldUpdateOperationsInput | string
+  recommendation?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -359,9 +405,12 @@ export type AIScoreUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   applicationId?: Prisma.StringFieldUpdateOperationsInput | string
   cvScore?: Prisma.FloatFieldUpdateOperationsInput | number
-  interviewScore?: Prisma.FloatFieldUpdateOperationsInput | number
+  interviewScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   overallScore?: Prisma.FloatFieldUpdateOperationsInput | number
+  strengths?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  weaknesses?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   summary?: Prisma.StringFieldUpdateOperationsInput | string
+  recommendation?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -376,7 +425,10 @@ export type AIScoreCountOrderByAggregateInput = {
   cvScore?: Prisma.SortOrder
   interviewScore?: Prisma.SortOrder
   overallScore?: Prisma.SortOrder
+  strengths?: Prisma.SortOrder
+  weaknesses?: Prisma.SortOrder
   summary?: Prisma.SortOrder
+  recommendation?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -393,6 +445,7 @@ export type AIScoreMaxOrderByAggregateInput = {
   interviewScore?: Prisma.SortOrder
   overallScore?: Prisma.SortOrder
   summary?: Prisma.SortOrder
+  recommendation?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -403,6 +456,7 @@ export type AIScoreMinOrderByAggregateInput = {
   interviewScore?: Prisma.SortOrder
   overallScore?: Prisma.SortOrder
   summary?: Prisma.SortOrder
+  recommendation?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
@@ -452,21 +506,35 @@ export type FloatFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type NullableFloatFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type AIScoreCreateWithoutApplicationInput = {
   id?: string
   cvScore: number
-  interviewScore: number
+  interviewScore?: number | null
   overallScore: number
+  strengths: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  weaknesses: Prisma.JsonNullValueInput | runtime.InputJsonValue
   summary: string
+  recommendation: string
   createdAt?: Date | string
 }
 
 export type AIScoreUncheckedCreateWithoutApplicationInput = {
   id?: string
   cvScore: number
-  interviewScore: number
+  interviewScore?: number | null
   overallScore: number
+  strengths: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  weaknesses: Prisma.JsonNullValueInput | runtime.InputJsonValue
   summary: string
+  recommendation: string
   createdAt?: Date | string
 }
 
@@ -489,18 +557,24 @@ export type AIScoreUpdateToOneWithWhereWithoutApplicationInput = {
 export type AIScoreUpdateWithoutApplicationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   cvScore?: Prisma.FloatFieldUpdateOperationsInput | number
-  interviewScore?: Prisma.FloatFieldUpdateOperationsInput | number
+  interviewScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   overallScore?: Prisma.FloatFieldUpdateOperationsInput | number
+  strengths?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  weaknesses?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   summary?: Prisma.StringFieldUpdateOperationsInput | string
+  recommendation?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AIScoreUncheckedUpdateWithoutApplicationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   cvScore?: Prisma.FloatFieldUpdateOperationsInput | number
-  interviewScore?: Prisma.FloatFieldUpdateOperationsInput | number
+  interviewScore?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   overallScore?: Prisma.FloatFieldUpdateOperationsInput | number
+  strengths?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  weaknesses?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   summary?: Prisma.StringFieldUpdateOperationsInput | string
+  recommendation?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -512,7 +586,10 @@ export type AIScoreSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   cvScore?: boolean
   interviewScore?: boolean
   overallScore?: boolean
+  strengths?: boolean
+  weaknesses?: boolean
   summary?: boolean
+  recommendation?: boolean
   createdAt?: boolean
   application?: boolean | Prisma.ApplicationDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["aIScore"]>
@@ -523,7 +600,10 @@ export type AIScoreSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   cvScore?: boolean
   interviewScore?: boolean
   overallScore?: boolean
+  strengths?: boolean
+  weaknesses?: boolean
   summary?: boolean
+  recommendation?: boolean
   createdAt?: boolean
   application?: boolean | Prisma.ApplicationDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["aIScore"]>
@@ -534,7 +614,10 @@ export type AIScoreSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   cvScore?: boolean
   interviewScore?: boolean
   overallScore?: boolean
+  strengths?: boolean
+  weaknesses?: boolean
   summary?: boolean
+  recommendation?: boolean
   createdAt?: boolean
   application?: boolean | Prisma.ApplicationDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["aIScore"]>
@@ -545,11 +628,14 @@ export type AIScoreSelectScalar = {
   cvScore?: boolean
   interviewScore?: boolean
   overallScore?: boolean
+  strengths?: boolean
+  weaknesses?: boolean
   summary?: boolean
+  recommendation?: boolean
   createdAt?: boolean
 }
 
-export type AIScoreOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "applicationId" | "cvScore" | "interviewScore" | "overallScore" | "summary" | "createdAt", ExtArgs["result"]["aIScore"]>
+export type AIScoreOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "applicationId" | "cvScore" | "interviewScore" | "overallScore" | "strengths" | "weaknesses" | "summary" | "recommendation" | "createdAt", ExtArgs["result"]["aIScore"]>
 export type AIScoreInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   application?: boolean | Prisma.ApplicationDefaultArgs<ExtArgs>
 }
@@ -569,9 +655,12 @@ export type $AIScorePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     id: string
     applicationId: string
     cvScore: number
-    interviewScore: number
+    interviewScore: number | null
     overallScore: number
+    strengths: runtime.JsonValue
+    weaknesses: runtime.JsonValue
     summary: string
+    recommendation: string
     createdAt: Date
   }, ExtArgs["result"]["aIScore"]>
   composites: {}
@@ -1002,7 +1091,10 @@ export interface AIScoreFieldRefs {
   readonly cvScore: Prisma.FieldRef<"AIScore", 'Float'>
   readonly interviewScore: Prisma.FieldRef<"AIScore", 'Float'>
   readonly overallScore: Prisma.FieldRef<"AIScore", 'Float'>
+  readonly strengths: Prisma.FieldRef<"AIScore", 'Json'>
+  readonly weaknesses: Prisma.FieldRef<"AIScore", 'Json'>
   readonly summary: Prisma.FieldRef<"AIScore", 'String'>
+  readonly recommendation: Prisma.FieldRef<"AIScore", 'String'>
   readonly createdAt: Prisma.FieldRef<"AIScore", 'DateTime'>
 }
     

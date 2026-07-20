@@ -15,3 +15,15 @@ export const UserRole = {
 } as const
 
 export type UserRole = (typeof UserRole)[keyof typeof UserRole]
+
+
+export const ApplicationStatus = {
+  PENDING: 'PENDING',
+  AI_PROCESSING: 'AI_PROCESSING',
+  INTERVIEW_SCHEDULED: 'INTERVIEW_SCHEDULED',
+  INTERVIEW_COMPLETED: 'INTERVIEW_COMPLETED',
+  REJECTED: 'REJECTED',
+  HIRED: 'HIRED'
+} as const
+
+export type ApplicationStatus = (typeof ApplicationStatus)[keyof typeof ApplicationStatus]

@@ -28,6 +28,7 @@ export type CandidateMinAggregateOutputType = {
   id: string | null
   fullName: string | null
   email: string | null
+  resumeFileName: string | null
   phone: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -37,6 +38,7 @@ export type CandidateMaxAggregateOutputType = {
   id: string | null
   fullName: string | null
   email: string | null
+  resumeFileName: string | null
   phone: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -46,6 +48,7 @@ export type CandidateCountAggregateOutputType = {
   id: number
   fullName: number
   email: number
+  resumeFileName: number
   phone: number
   createdAt: number
   updatedAt: number
@@ -57,6 +60,7 @@ export type CandidateMinAggregateInputType = {
   id?: true
   fullName?: true
   email?: true
+  resumeFileName?: true
   phone?: true
   createdAt?: true
   updatedAt?: true
@@ -66,6 +70,7 @@ export type CandidateMaxAggregateInputType = {
   id?: true
   fullName?: true
   email?: true
+  resumeFileName?: true
   phone?: true
   createdAt?: true
   updatedAt?: true
@@ -75,6 +80,7 @@ export type CandidateCountAggregateInputType = {
   id?: true
   fullName?: true
   email?: true
+  resumeFileName?: true
   phone?: true
   createdAt?: true
   updatedAt?: true
@@ -157,6 +163,7 @@ export type CandidateGroupByOutputType = {
   id: string
   fullName: string
   email: string
+  resumeFileName: string | null
   phone: string
   createdAt: Date
   updatedAt: Date
@@ -187,6 +194,7 @@ export type CandidateWhereInput = {
   id?: Prisma.StringFilter<"Candidate"> | string
   fullName?: Prisma.StringFilter<"Candidate"> | string
   email?: Prisma.StringFilter<"Candidate"> | string
+  resumeFileName?: Prisma.StringNullableFilter<"Candidate"> | string | null
   phone?: Prisma.StringFilter<"Candidate"> | string
   createdAt?: Prisma.DateTimeFilter<"Candidate"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Candidate"> | Date | string
@@ -197,6 +205,7 @@ export type CandidateOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   fullName?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  resumeFileName?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -205,21 +214,23 @@ export type CandidateOrderByWithRelationInput = {
 
 export type CandidateWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  email?: string
   AND?: Prisma.CandidateWhereInput | Prisma.CandidateWhereInput[]
   OR?: Prisma.CandidateWhereInput[]
   NOT?: Prisma.CandidateWhereInput | Prisma.CandidateWhereInput[]
   fullName?: Prisma.StringFilter<"Candidate"> | string
+  email?: Prisma.StringFilter<"Candidate"> | string
+  resumeFileName?: Prisma.StringNullableFilter<"Candidate"> | string | null
   phone?: Prisma.StringFilter<"Candidate"> | string
   createdAt?: Prisma.DateTimeFilter<"Candidate"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Candidate"> | Date | string
   applications?: Prisma.ApplicationListRelationFilter
-}, "id" | "email">
+}, "id">
 
 export type CandidateOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   fullName?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  resumeFileName?: Prisma.SortOrderInput | Prisma.SortOrder
   phone?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -235,6 +246,7 @@ export type CandidateScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Candidate"> | string
   fullName?: Prisma.StringWithAggregatesFilter<"Candidate"> | string
   email?: Prisma.StringWithAggregatesFilter<"Candidate"> | string
+  resumeFileName?: Prisma.StringNullableWithAggregatesFilter<"Candidate"> | string | null
   phone?: Prisma.StringWithAggregatesFilter<"Candidate"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Candidate"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Candidate"> | Date | string
@@ -244,6 +256,7 @@ export type CandidateCreateInput = {
   id?: string
   fullName: string
   email: string
+  resumeFileName?: string | null
   phone: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -254,6 +267,7 @@ export type CandidateUncheckedCreateInput = {
   id?: string
   fullName: string
   email: string
+  resumeFileName?: string | null
   phone: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -264,6 +278,7 @@ export type CandidateUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  resumeFileName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -274,6 +289,7 @@ export type CandidateUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  resumeFileName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -284,6 +300,7 @@ export type CandidateCreateManyInput = {
   id?: string
   fullName: string
   email: string
+  resumeFileName?: string | null
   phone: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -293,6 +310,7 @@ export type CandidateUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  resumeFileName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -302,6 +320,7 @@ export type CandidateUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  resumeFileName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -311,6 +330,7 @@ export type CandidateCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   fullName?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  resumeFileName?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -320,6 +340,7 @@ export type CandidateMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   fullName?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  resumeFileName?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -329,6 +350,7 @@ export type CandidateMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   fullName?: Prisma.SortOrder
   email?: Prisma.SortOrder
+  resumeFileName?: Prisma.SortOrder
   phone?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -337,6 +359,10 @@ export type CandidateMinOrderByAggregateInput = {
 export type CandidateScalarRelationFilter = {
   is?: Prisma.CandidateWhereInput
   isNot?: Prisma.CandidateWhereInput
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
 }
 
 export type CandidateCreateNestedOneWithoutApplicationsInput = {
@@ -357,6 +383,7 @@ export type CandidateCreateWithoutApplicationsInput = {
   id?: string
   fullName: string
   email: string
+  resumeFileName?: string | null
   phone: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -366,6 +393,7 @@ export type CandidateUncheckedCreateWithoutApplicationsInput = {
   id?: string
   fullName: string
   email: string
+  resumeFileName?: string | null
   phone: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -391,6 +419,7 @@ export type CandidateUpdateWithoutApplicationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  resumeFileName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -400,6 +429,7 @@ export type CandidateUncheckedUpdateWithoutApplicationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   fullName?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
+  resumeFileName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   phone?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -440,6 +470,7 @@ export type CandidateSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   id?: boolean
   fullName?: boolean
   email?: boolean
+  resumeFileName?: boolean
   phone?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -451,6 +482,7 @@ export type CandidateSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   id?: boolean
   fullName?: boolean
   email?: boolean
+  resumeFileName?: boolean
   phone?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -460,6 +492,7 @@ export type CandidateSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   id?: boolean
   fullName?: boolean
   email?: boolean
+  resumeFileName?: boolean
   phone?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -469,12 +502,13 @@ export type CandidateSelectScalar = {
   id?: boolean
   fullName?: boolean
   email?: boolean
+  resumeFileName?: boolean
   phone?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type CandidateOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fullName" | "email" | "phone" | "createdAt" | "updatedAt", ExtArgs["result"]["candidate"]>
+export type CandidateOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fullName" | "email" | "resumeFileName" | "phone" | "createdAt" | "updatedAt", ExtArgs["result"]["candidate"]>
 export type CandidateInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   applications?: boolean | Prisma.Candidate$applicationsArgs<ExtArgs>
   _count?: boolean | Prisma.CandidateCountOutputTypeDefaultArgs<ExtArgs>
@@ -491,6 +525,7 @@ export type $CandidatePayload<ExtArgs extends runtime.Types.Extensions.InternalA
     id: string
     fullName: string
     email: string
+    resumeFileName: string | null
     phone: string
     createdAt: Date
     updatedAt: Date
@@ -921,6 +956,7 @@ export interface CandidateFieldRefs {
   readonly id: Prisma.FieldRef<"Candidate", 'String'>
   readonly fullName: Prisma.FieldRef<"Candidate", 'String'>
   readonly email: Prisma.FieldRef<"Candidate", 'String'>
+  readonly resumeFileName: Prisma.FieldRef<"Candidate", 'String'>
   readonly phone: Prisma.FieldRef<"Candidate", 'String'>
   readonly createdAt: Prisma.FieldRef<"Candidate", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Candidate", 'DateTime'>

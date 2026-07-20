@@ -998,6 +998,7 @@ export const CandidateScalarFieldEnum = {
   id: 'id',
   fullName: 'fullName',
   email: 'email',
+  resumeFileName: 'resumeFileName',
   phone: 'phone',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -1008,11 +1009,10 @@ export type CandidateScalarFieldEnum = (typeof CandidateScalarFieldEnum)[keyof t
 
 export const ApplicationScalarFieldEnum = {
   id: 'id',
-  jobId: 'jobId',
   candidateId: 'candidateId',
-  cvUrl: 'cvUrl',
+  jobId: 'jobId',
   status: 'status',
-  createdAt: 'createdAt'
+  appliedAt: 'appliedAt'
 } as const
 
 export type ApplicationScalarFieldEnum = (typeof ApplicationScalarFieldEnum)[keyof typeof ApplicationScalarFieldEnum]
@@ -1024,7 +1024,10 @@ export const AIScoreScalarFieldEnum = {
   cvScore: 'cvScore',
   interviewScore: 'interviewScore',
   overallScore: 'overallScore',
+  strengths: 'strengths',
+  weaknesses: 'weaknesses',
   summary: 'summary',
+  recommendation: 'recommendation',
   createdAt: 'createdAt'
 } as const
 
@@ -1060,12 +1063,36 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
 export const QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
 
@@ -1117,6 +1144,20 @@ export type ListEnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
 
 
 /**
+ * Reference to a field of type 'ApplicationStatus'
+ */
+export type EnumApplicationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ApplicationStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'ApplicationStatus[]'
+ */
+export type ListEnumApplicationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ApplicationStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -1127,6 +1168,20 @@ export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, '
  * Reference to a field of type 'Float[]'
  */
 export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 

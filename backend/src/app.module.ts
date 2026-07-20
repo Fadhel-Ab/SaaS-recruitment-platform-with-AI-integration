@@ -15,6 +15,7 @@ import { SchedulingModule } from './scheduling/scheduling.module.js';
 import { UsersModule } from './users/users.module.js';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './auth/guards/roles.guard.js';
+import { StorageModule } from 'common/storage/storage.module.js';
 
 ConfigModule.forRoot({
   isGlobal: true,
@@ -24,7 +25,7 @@ ConfigModule.forRoot({
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-
+    StorageModule,
     PrismaModule,
     AuthModule,
     UsersModule,
@@ -38,9 +39,12 @@ ConfigModule.forRoot({
     CommonModule,
   ],
   controllers: [AppController],
-  providers: [AppService, {
-    provide: APP_GUARD,
-    useClass: RolesGuard,
-  },],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+  ],
 })
 export class AppModule {}

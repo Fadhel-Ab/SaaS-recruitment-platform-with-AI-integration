@@ -26,58 +26,52 @@ export type AggregateApplication = {
 
 export type ApplicationMinAggregateOutputType = {
   id: string | null
-  jobId: string | null
   candidateId: string | null
-  cvUrl: string | null
-  status: string | null
-  createdAt: Date | null
+  jobId: string | null
+  status: $Enums.ApplicationStatus | null
+  appliedAt: Date | null
 }
 
 export type ApplicationMaxAggregateOutputType = {
   id: string | null
-  jobId: string | null
   candidateId: string | null
-  cvUrl: string | null
-  status: string | null
-  createdAt: Date | null
+  jobId: string | null
+  status: $Enums.ApplicationStatus | null
+  appliedAt: Date | null
 }
 
 export type ApplicationCountAggregateOutputType = {
   id: number
-  jobId: number
   candidateId: number
-  cvUrl: number
+  jobId: number
   status: number
-  createdAt: number
+  appliedAt: number
   _all: number
 }
 
 
 export type ApplicationMinAggregateInputType = {
   id?: true
-  jobId?: true
   candidateId?: true
-  cvUrl?: true
+  jobId?: true
   status?: true
-  createdAt?: true
+  appliedAt?: true
 }
 
 export type ApplicationMaxAggregateInputType = {
   id?: true
-  jobId?: true
   candidateId?: true
-  cvUrl?: true
+  jobId?: true
   status?: true
-  createdAt?: true
+  appliedAt?: true
 }
 
 export type ApplicationCountAggregateInputType = {
   id?: true
-  jobId?: true
   candidateId?: true
-  cvUrl?: true
+  jobId?: true
   status?: true
-  createdAt?: true
+  appliedAt?: true
   _all?: true
 }
 
@@ -155,11 +149,10 @@ export type ApplicationGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 
 export type ApplicationGroupByOutputType = {
   id: string
-  jobId: string
   candidateId: string
-  cvUrl: string
-  status: string
-  createdAt: Date
+  jobId: string
+  status: $Enums.ApplicationStatus
+  appliedAt: Date
   _count: ApplicationCountAggregateOutputType | null
   _min: ApplicationMinAggregateOutputType | null
   _max: ApplicationMaxAggregateOutputType | null
@@ -185,27 +178,25 @@ export type ApplicationWhereInput = {
   OR?: Prisma.ApplicationWhereInput[]
   NOT?: Prisma.ApplicationWhereInput | Prisma.ApplicationWhereInput[]
   id?: Prisma.StringFilter<"Application"> | string
-  jobId?: Prisma.StringFilter<"Application"> | string
   candidateId?: Prisma.StringFilter<"Application"> | string
-  cvUrl?: Prisma.StringFilter<"Application"> | string
-  status?: Prisma.StringFilter<"Application"> | string
-  createdAt?: Prisma.DateTimeFilter<"Application"> | Date | string
-  aiScore?: Prisma.XOR<Prisma.AIScoreNullableScalarRelationFilter, Prisma.AIScoreWhereInput> | null
+  jobId?: Prisma.StringFilter<"Application"> | string
+  status?: Prisma.EnumApplicationStatusFilter<"Application"> | $Enums.ApplicationStatus
+  appliedAt?: Prisma.DateTimeFilter<"Application"> | Date | string
   candidate?: Prisma.XOR<Prisma.CandidateScalarRelationFilter, Prisma.CandidateWhereInput>
   job?: Prisma.XOR<Prisma.JobScalarRelationFilter, Prisma.JobWhereInput>
+  aiScore?: Prisma.XOR<Prisma.AIScoreNullableScalarRelationFilter, Prisma.AIScoreWhereInput> | null
   interview?: Prisma.XOR<Prisma.InterviewNullableScalarRelationFilter, Prisma.InterviewWhereInput> | null
 }
 
 export type ApplicationOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  jobId?: Prisma.SortOrder
   candidateId?: Prisma.SortOrder
-  cvUrl?: Prisma.SortOrder
+  jobId?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  aiScore?: Prisma.AIScoreOrderByWithRelationInput
+  appliedAt?: Prisma.SortOrder
   candidate?: Prisma.CandidateOrderByWithRelationInput
   job?: Prisma.JobOrderByWithRelationInput
+  aiScore?: Prisma.AIScoreOrderByWithRelationInput
   interview?: Prisma.InterviewOrderByWithRelationInput
 }
 
@@ -214,24 +205,22 @@ export type ApplicationWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.ApplicationWhereInput | Prisma.ApplicationWhereInput[]
   OR?: Prisma.ApplicationWhereInput[]
   NOT?: Prisma.ApplicationWhereInput | Prisma.ApplicationWhereInput[]
-  jobId?: Prisma.StringFilter<"Application"> | string
   candidateId?: Prisma.StringFilter<"Application"> | string
-  cvUrl?: Prisma.StringFilter<"Application"> | string
-  status?: Prisma.StringFilter<"Application"> | string
-  createdAt?: Prisma.DateTimeFilter<"Application"> | Date | string
-  aiScore?: Prisma.XOR<Prisma.AIScoreNullableScalarRelationFilter, Prisma.AIScoreWhereInput> | null
+  jobId?: Prisma.StringFilter<"Application"> | string
+  status?: Prisma.EnumApplicationStatusFilter<"Application"> | $Enums.ApplicationStatus
+  appliedAt?: Prisma.DateTimeFilter<"Application"> | Date | string
   candidate?: Prisma.XOR<Prisma.CandidateScalarRelationFilter, Prisma.CandidateWhereInput>
   job?: Prisma.XOR<Prisma.JobScalarRelationFilter, Prisma.JobWhereInput>
+  aiScore?: Prisma.XOR<Prisma.AIScoreNullableScalarRelationFilter, Prisma.AIScoreWhereInput> | null
   interview?: Prisma.XOR<Prisma.InterviewNullableScalarRelationFilter, Prisma.InterviewWhereInput> | null
 }, "id">
 
 export type ApplicationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  jobId?: Prisma.SortOrder
   candidateId?: Prisma.SortOrder
-  cvUrl?: Prisma.SortOrder
+  jobId?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+  appliedAt?: Prisma.SortOrder
   _count?: Prisma.ApplicationCountOrderByAggregateInput
   _max?: Prisma.ApplicationMaxOrderByAggregateInput
   _min?: Prisma.ApplicationMinOrderByAggregateInput
@@ -242,80 +231,72 @@ export type ApplicationScalarWhereWithAggregatesInput = {
   OR?: Prisma.ApplicationScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ApplicationScalarWhereWithAggregatesInput | Prisma.ApplicationScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Application"> | string
-  jobId?: Prisma.StringWithAggregatesFilter<"Application"> | string
   candidateId?: Prisma.StringWithAggregatesFilter<"Application"> | string
-  cvUrl?: Prisma.StringWithAggregatesFilter<"Application"> | string
-  status?: Prisma.StringWithAggregatesFilter<"Application"> | string
-  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Application"> | Date | string
+  jobId?: Prisma.StringWithAggregatesFilter<"Application"> | string
+  status?: Prisma.EnumApplicationStatusWithAggregatesFilter<"Application"> | $Enums.ApplicationStatus
+  appliedAt?: Prisma.DateTimeWithAggregatesFilter<"Application"> | Date | string
 }
 
 export type ApplicationCreateInput = {
   id?: string
-  cvUrl: string
-  status?: string
-  createdAt?: Date | string
-  aiScore?: Prisma.AIScoreCreateNestedOneWithoutApplicationInput
+  status?: $Enums.ApplicationStatus
+  appliedAt?: Date | string
   candidate: Prisma.CandidateCreateNestedOneWithoutApplicationsInput
   job: Prisma.JobCreateNestedOneWithoutApplicationsInput
+  aiScore?: Prisma.AIScoreCreateNestedOneWithoutApplicationInput
   interview?: Prisma.InterviewCreateNestedOneWithoutApplicationInput
 }
 
 export type ApplicationUncheckedCreateInput = {
   id?: string
-  jobId: string
   candidateId: string
-  cvUrl: string
-  status?: string
-  createdAt?: Date | string
+  jobId: string
+  status?: $Enums.ApplicationStatus
+  appliedAt?: Date | string
   aiScore?: Prisma.AIScoreUncheckedCreateNestedOneWithoutApplicationInput
   interview?: Prisma.InterviewUncheckedCreateNestedOneWithoutApplicationInput
 }
 
 export type ApplicationUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  cvUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  aiScore?: Prisma.AIScoreUpdateOneWithoutApplicationNestedInput
+  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  appliedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   candidate?: Prisma.CandidateUpdateOneRequiredWithoutApplicationsNestedInput
   job?: Prisma.JobUpdateOneRequiredWithoutApplicationsNestedInput
+  aiScore?: Prisma.AIScoreUpdateOneWithoutApplicationNestedInput
   interview?: Prisma.InterviewUpdateOneWithoutApplicationNestedInput
 }
 
 export type ApplicationUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  jobId?: Prisma.StringFieldUpdateOperationsInput | string
   candidateId?: Prisma.StringFieldUpdateOperationsInput | string
-  cvUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  jobId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  appliedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   aiScore?: Prisma.AIScoreUncheckedUpdateOneWithoutApplicationNestedInput
   interview?: Prisma.InterviewUncheckedUpdateOneWithoutApplicationNestedInput
 }
 
 export type ApplicationCreateManyInput = {
   id?: string
-  jobId: string
   candidateId: string
-  cvUrl: string
-  status?: string
-  createdAt?: Date | string
+  jobId: string
+  status?: $Enums.ApplicationStatus
+  appliedAt?: Date | string
 }
 
 export type ApplicationUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  cvUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  appliedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ApplicationUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  jobId?: Prisma.StringFieldUpdateOperationsInput | string
   candidateId?: Prisma.StringFieldUpdateOperationsInput | string
-  cvUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  jobId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  appliedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ApplicationListRelationFilter = {
@@ -330,29 +311,26 @@ export type ApplicationOrderByRelationAggregateInput = {
 
 export type ApplicationCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  jobId?: Prisma.SortOrder
   candidateId?: Prisma.SortOrder
-  cvUrl?: Prisma.SortOrder
+  jobId?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+  appliedAt?: Prisma.SortOrder
 }
 
 export type ApplicationMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  jobId?: Prisma.SortOrder
   candidateId?: Prisma.SortOrder
-  cvUrl?: Prisma.SortOrder
+  jobId?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+  appliedAt?: Prisma.SortOrder
 }
 
 export type ApplicationMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  jobId?: Prisma.SortOrder
   candidateId?: Prisma.SortOrder
-  cvUrl?: Prisma.SortOrder
+  jobId?: Prisma.SortOrder
   status?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
+  appliedAt?: Prisma.SortOrder
 }
 
 export type ApplicationScalarRelationFilter = {
@@ -444,6 +422,10 @@ export type ApplicationUncheckedUpdateManyWithoutCandidateNestedInput = {
   deleteMany?: Prisma.ApplicationScalarWhereInput | Prisma.ApplicationScalarWhereInput[]
 }
 
+export type EnumApplicationStatusFieldUpdateOperationsInput = {
+  set?: $Enums.ApplicationStatus
+}
+
 export type ApplicationCreateNestedOneWithoutAiScoreInput = {
   create?: Prisma.XOR<Prisma.ApplicationCreateWithoutAiScoreInput, Prisma.ApplicationUncheckedCreateWithoutAiScoreInput>
   connectOrCreate?: Prisma.ApplicationCreateOrConnectWithoutAiScoreInput
@@ -474,20 +456,18 @@ export type ApplicationUpdateOneRequiredWithoutInterviewNestedInput = {
 
 export type ApplicationCreateWithoutJobInput = {
   id?: string
-  cvUrl: string
-  status?: string
-  createdAt?: Date | string
-  aiScore?: Prisma.AIScoreCreateNestedOneWithoutApplicationInput
+  status?: $Enums.ApplicationStatus
+  appliedAt?: Date | string
   candidate: Prisma.CandidateCreateNestedOneWithoutApplicationsInput
+  aiScore?: Prisma.AIScoreCreateNestedOneWithoutApplicationInput
   interview?: Prisma.InterviewCreateNestedOneWithoutApplicationInput
 }
 
 export type ApplicationUncheckedCreateWithoutJobInput = {
   id?: string
   candidateId: string
-  cvUrl: string
-  status?: string
-  createdAt?: Date | string
+  status?: $Enums.ApplicationStatus
+  appliedAt?: Date | string
   aiScore?: Prisma.AIScoreUncheckedCreateNestedOneWithoutApplicationInput
   interview?: Prisma.InterviewUncheckedCreateNestedOneWithoutApplicationInput
 }
@@ -523,29 +503,26 @@ export type ApplicationScalarWhereInput = {
   OR?: Prisma.ApplicationScalarWhereInput[]
   NOT?: Prisma.ApplicationScalarWhereInput | Prisma.ApplicationScalarWhereInput[]
   id?: Prisma.StringFilter<"Application"> | string
-  jobId?: Prisma.StringFilter<"Application"> | string
   candidateId?: Prisma.StringFilter<"Application"> | string
-  cvUrl?: Prisma.StringFilter<"Application"> | string
-  status?: Prisma.StringFilter<"Application"> | string
-  createdAt?: Prisma.DateTimeFilter<"Application"> | Date | string
+  jobId?: Prisma.StringFilter<"Application"> | string
+  status?: Prisma.EnumApplicationStatusFilter<"Application"> | $Enums.ApplicationStatus
+  appliedAt?: Prisma.DateTimeFilter<"Application"> | Date | string
 }
 
 export type ApplicationCreateWithoutCandidateInput = {
   id?: string
-  cvUrl: string
-  status?: string
-  createdAt?: Date | string
-  aiScore?: Prisma.AIScoreCreateNestedOneWithoutApplicationInput
+  status?: $Enums.ApplicationStatus
+  appliedAt?: Date | string
   job: Prisma.JobCreateNestedOneWithoutApplicationsInput
+  aiScore?: Prisma.AIScoreCreateNestedOneWithoutApplicationInput
   interview?: Prisma.InterviewCreateNestedOneWithoutApplicationInput
 }
 
 export type ApplicationUncheckedCreateWithoutCandidateInput = {
   id?: string
   jobId: string
-  cvUrl: string
-  status?: string
-  createdAt?: Date | string
+  status?: $Enums.ApplicationStatus
+  appliedAt?: Date | string
   aiScore?: Prisma.AIScoreUncheckedCreateNestedOneWithoutApplicationInput
   interview?: Prisma.InterviewUncheckedCreateNestedOneWithoutApplicationInput
 }
@@ -578,9 +555,8 @@ export type ApplicationUpdateManyWithWhereWithoutCandidateInput = {
 
 export type ApplicationCreateWithoutAiScoreInput = {
   id?: string
-  cvUrl: string
-  status?: string
-  createdAt?: Date | string
+  status?: $Enums.ApplicationStatus
+  appliedAt?: Date | string
   candidate: Prisma.CandidateCreateNestedOneWithoutApplicationsInput
   job: Prisma.JobCreateNestedOneWithoutApplicationsInput
   interview?: Prisma.InterviewCreateNestedOneWithoutApplicationInput
@@ -588,11 +564,10 @@ export type ApplicationCreateWithoutAiScoreInput = {
 
 export type ApplicationUncheckedCreateWithoutAiScoreInput = {
   id?: string
-  jobId: string
   candidateId: string
-  cvUrl: string
-  status?: string
-  createdAt?: Date | string
+  jobId: string
+  status?: $Enums.ApplicationStatus
+  appliedAt?: Date | string
   interview?: Prisma.InterviewUncheckedCreateNestedOneWithoutApplicationInput
 }
 
@@ -614,9 +589,8 @@ export type ApplicationUpdateToOneWithWhereWithoutAiScoreInput = {
 
 export type ApplicationUpdateWithoutAiScoreInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  cvUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  appliedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   candidate?: Prisma.CandidateUpdateOneRequiredWithoutApplicationsNestedInput
   job?: Prisma.JobUpdateOneRequiredWithoutApplicationsNestedInput
   interview?: Prisma.InterviewUpdateOneWithoutApplicationNestedInput
@@ -624,31 +598,28 @@ export type ApplicationUpdateWithoutAiScoreInput = {
 
 export type ApplicationUncheckedUpdateWithoutAiScoreInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  jobId?: Prisma.StringFieldUpdateOperationsInput | string
   candidateId?: Prisma.StringFieldUpdateOperationsInput | string
-  cvUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  jobId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  appliedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   interview?: Prisma.InterviewUncheckedUpdateOneWithoutApplicationNestedInput
 }
 
 export type ApplicationCreateWithoutInterviewInput = {
   id?: string
-  cvUrl: string
-  status?: string
-  createdAt?: Date | string
-  aiScore?: Prisma.AIScoreCreateNestedOneWithoutApplicationInput
+  status?: $Enums.ApplicationStatus
+  appliedAt?: Date | string
   candidate: Prisma.CandidateCreateNestedOneWithoutApplicationsInput
   job: Prisma.JobCreateNestedOneWithoutApplicationsInput
+  aiScore?: Prisma.AIScoreCreateNestedOneWithoutApplicationInput
 }
 
 export type ApplicationUncheckedCreateWithoutInterviewInput = {
   id?: string
-  jobId: string
   candidateId: string
-  cvUrl: string
-  status?: string
-  createdAt?: Date | string
+  jobId: string
+  status?: $Enums.ApplicationStatus
+  appliedAt?: Date | string
   aiScore?: Prisma.AIScoreUncheckedCreateNestedOneWithoutApplicationInput
 }
 
@@ -670,48 +641,43 @@ export type ApplicationUpdateToOneWithWhereWithoutInterviewInput = {
 
 export type ApplicationUpdateWithoutInterviewInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  cvUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  aiScore?: Prisma.AIScoreUpdateOneWithoutApplicationNestedInput
+  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  appliedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   candidate?: Prisma.CandidateUpdateOneRequiredWithoutApplicationsNestedInput
   job?: Prisma.JobUpdateOneRequiredWithoutApplicationsNestedInput
+  aiScore?: Prisma.AIScoreUpdateOneWithoutApplicationNestedInput
 }
 
 export type ApplicationUncheckedUpdateWithoutInterviewInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  jobId?: Prisma.StringFieldUpdateOperationsInput | string
   candidateId?: Prisma.StringFieldUpdateOperationsInput | string
-  cvUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  jobId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  appliedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   aiScore?: Prisma.AIScoreUncheckedUpdateOneWithoutApplicationNestedInput
 }
 
 export type ApplicationCreateManyJobInput = {
   id?: string
   candidateId: string
-  cvUrl: string
-  status?: string
-  createdAt?: Date | string
+  status?: $Enums.ApplicationStatus
+  appliedAt?: Date | string
 }
 
 export type ApplicationUpdateWithoutJobInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  cvUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  aiScore?: Prisma.AIScoreUpdateOneWithoutApplicationNestedInput
+  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  appliedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   candidate?: Prisma.CandidateUpdateOneRequiredWithoutApplicationsNestedInput
+  aiScore?: Prisma.AIScoreUpdateOneWithoutApplicationNestedInput
   interview?: Prisma.InterviewUpdateOneWithoutApplicationNestedInput
 }
 
 export type ApplicationUncheckedUpdateWithoutJobInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   candidateId?: Prisma.StringFieldUpdateOperationsInput | string
-  cvUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  appliedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   aiScore?: Prisma.AIScoreUncheckedUpdateOneWithoutApplicationNestedInput
   interview?: Prisma.InterviewUncheckedUpdateOneWithoutApplicationNestedInput
 }
@@ -719,35 +685,31 @@ export type ApplicationUncheckedUpdateWithoutJobInput = {
 export type ApplicationUncheckedUpdateManyWithoutJobInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   candidateId?: Prisma.StringFieldUpdateOperationsInput | string
-  cvUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  appliedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ApplicationCreateManyCandidateInput = {
   id?: string
   jobId: string
-  cvUrl: string
-  status?: string
-  createdAt?: Date | string
+  status?: $Enums.ApplicationStatus
+  appliedAt?: Date | string
 }
 
 export type ApplicationUpdateWithoutCandidateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  cvUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  aiScore?: Prisma.AIScoreUpdateOneWithoutApplicationNestedInput
+  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  appliedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   job?: Prisma.JobUpdateOneRequiredWithoutApplicationsNestedInput
+  aiScore?: Prisma.AIScoreUpdateOneWithoutApplicationNestedInput
   interview?: Prisma.InterviewUpdateOneWithoutApplicationNestedInput
 }
 
 export type ApplicationUncheckedUpdateWithoutCandidateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   jobId?: Prisma.StringFieldUpdateOperationsInput | string
-  cvUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  appliedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   aiScore?: Prisma.AIScoreUncheckedUpdateOneWithoutApplicationNestedInput
   interview?: Prisma.InterviewUncheckedUpdateOneWithoutApplicationNestedInput
 }
@@ -755,62 +717,57 @@ export type ApplicationUncheckedUpdateWithoutCandidateInput = {
 export type ApplicationUncheckedUpdateManyWithoutCandidateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   jobId?: Prisma.StringFieldUpdateOperationsInput | string
-  cvUrl?: Prisma.StringFieldUpdateOperationsInput | string
-  status?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumApplicationStatusFieldUpdateOperationsInput | $Enums.ApplicationStatus
+  appliedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
 
 export type ApplicationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  jobId?: boolean
   candidateId?: boolean
-  cvUrl?: boolean
+  jobId?: boolean
   status?: boolean
-  createdAt?: boolean
-  aiScore?: boolean | Prisma.Application$aiScoreArgs<ExtArgs>
+  appliedAt?: boolean
   candidate?: boolean | Prisma.CandidateDefaultArgs<ExtArgs>
   job?: boolean | Prisma.JobDefaultArgs<ExtArgs>
+  aiScore?: boolean | Prisma.Application$aiScoreArgs<ExtArgs>
   interview?: boolean | Prisma.Application$interviewArgs<ExtArgs>
 }, ExtArgs["result"]["application"]>
 
 export type ApplicationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  jobId?: boolean
   candidateId?: boolean
-  cvUrl?: boolean
+  jobId?: boolean
   status?: boolean
-  createdAt?: boolean
+  appliedAt?: boolean
   candidate?: boolean | Prisma.CandidateDefaultArgs<ExtArgs>
   job?: boolean | Prisma.JobDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["application"]>
 
 export type ApplicationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  jobId?: boolean
   candidateId?: boolean
-  cvUrl?: boolean
+  jobId?: boolean
   status?: boolean
-  createdAt?: boolean
+  appliedAt?: boolean
   candidate?: boolean | Prisma.CandidateDefaultArgs<ExtArgs>
   job?: boolean | Prisma.JobDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["application"]>
 
 export type ApplicationSelectScalar = {
   id?: boolean
-  jobId?: boolean
   candidateId?: boolean
-  cvUrl?: boolean
+  jobId?: boolean
   status?: boolean
-  createdAt?: boolean
+  appliedAt?: boolean
 }
 
-export type ApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "jobId" | "candidateId" | "cvUrl" | "status" | "createdAt", ExtArgs["result"]["application"]>
+export type ApplicationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "candidateId" | "jobId" | "status" | "appliedAt", ExtArgs["result"]["application"]>
 export type ApplicationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  aiScore?: boolean | Prisma.Application$aiScoreArgs<ExtArgs>
   candidate?: boolean | Prisma.CandidateDefaultArgs<ExtArgs>
   job?: boolean | Prisma.JobDefaultArgs<ExtArgs>
+  aiScore?: boolean | Prisma.Application$aiScoreArgs<ExtArgs>
   interview?: boolean | Prisma.Application$interviewArgs<ExtArgs>
 }
 export type ApplicationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -825,18 +782,17 @@ export type ApplicationIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.
 export type $ApplicationPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Application"
   objects: {
-    aiScore: Prisma.$AIScorePayload<ExtArgs> | null
     candidate: Prisma.$CandidatePayload<ExtArgs>
     job: Prisma.$JobPayload<ExtArgs>
+    aiScore: Prisma.$AIScorePayload<ExtArgs> | null
     interview: Prisma.$InterviewPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    jobId: string
     candidateId: string
-    cvUrl: string
-    status: string
-    createdAt: Date
+    jobId: string
+    status: $Enums.ApplicationStatus
+    appliedAt: Date
   }, ExtArgs["result"]["application"]>
   composites: {}
 }
@@ -1231,9 +1187,9 @@ readonly fields: ApplicationFieldRefs;
  */
 export interface Prisma__ApplicationClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  aiScore<T extends Prisma.Application$aiScoreArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Application$aiScoreArgs<ExtArgs>>): Prisma.Prisma__AIScoreClient<runtime.Types.Result.GetResult<Prisma.$AIScorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   candidate<T extends Prisma.CandidateDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CandidateDefaultArgs<ExtArgs>>): Prisma.Prisma__CandidateClient<runtime.Types.Result.GetResult<Prisma.$CandidatePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   job<T extends Prisma.JobDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.JobDefaultArgs<ExtArgs>>): Prisma.Prisma__JobClient<runtime.Types.Result.GetResult<Prisma.$JobPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  aiScore<T extends Prisma.Application$aiScoreArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Application$aiScoreArgs<ExtArgs>>): Prisma.Prisma__AIScoreClient<runtime.Types.Result.GetResult<Prisma.$AIScorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   interview<T extends Prisma.Application$interviewArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Application$interviewArgs<ExtArgs>>): Prisma.Prisma__InterviewClient<runtime.Types.Result.GetResult<Prisma.$InterviewPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1265,11 +1221,10 @@ export interface Prisma__ApplicationClient<T, Null = never, ExtArgs extends runt
  */
 export interface ApplicationFieldRefs {
   readonly id: Prisma.FieldRef<"Application", 'String'>
-  readonly jobId: Prisma.FieldRef<"Application", 'String'>
   readonly candidateId: Prisma.FieldRef<"Application", 'String'>
-  readonly cvUrl: Prisma.FieldRef<"Application", 'String'>
-  readonly status: Prisma.FieldRef<"Application", 'String'>
-  readonly createdAt: Prisma.FieldRef<"Application", 'DateTime'>
+  readonly jobId: Prisma.FieldRef<"Application", 'String'>
+  readonly status: Prisma.FieldRef<"Application", 'ApplicationStatus'>
+  readonly appliedAt: Prisma.FieldRef<"Application", 'DateTime'>
 }
     
 
