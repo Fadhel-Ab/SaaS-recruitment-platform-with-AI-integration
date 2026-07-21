@@ -390,7 +390,8 @@ export const ModelName = {
   Application: 'Application',
   AIScore: 'AIScore',
   Availability: 'Availability',
-  Interview: 'Interview'
+  Interview: 'Interview',
+  AIInterview: 'AIInterview'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -406,7 +407,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "job" | "candidate" | "application" | "aIScore" | "availability" | "interview"
+    modelProps: "user" | "job" | "candidate" | "application" | "aIScore" | "availability" | "interview" | "aIInterview"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -928,6 +929,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    AIInterview: {
+      payload: Prisma.$AIInterviewPayload<ExtArgs>
+      fields: Prisma.AIInterviewFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AIInterviewFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AIInterviewPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AIInterviewFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AIInterviewPayload>
+        }
+        findFirst: {
+          args: Prisma.AIInterviewFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AIInterviewPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AIInterviewFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AIInterviewPayload>
+        }
+        findMany: {
+          args: Prisma.AIInterviewFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AIInterviewPayload>[]
+        }
+        create: {
+          args: Prisma.AIInterviewCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AIInterviewPayload>
+        }
+        createMany: {
+          args: Prisma.AIInterviewCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AIInterviewCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AIInterviewPayload>[]
+        }
+        delete: {
+          args: Prisma.AIInterviewDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AIInterviewPayload>
+        }
+        update: {
+          args: Prisma.AIInterviewUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AIInterviewPayload>
+        }
+        deleteMany: {
+          args: Prisma.AIInterviewDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AIInterviewUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AIInterviewUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AIInterviewPayload>[]
+        }
+        upsert: {
+          args: Prisma.AIInterviewUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AIInterviewPayload>
+        }
+        aggregate: {
+          args: Prisma.AIInterviewAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAIInterview>
+        }
+        groupBy: {
+          args: Prisma.AIInterviewGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AIInterviewGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AIInterviewCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AIInterviewCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1012,7 +1087,9 @@ export const ApplicationScalarFieldEnum = {
   candidateId: 'candidateId',
   jobId: 'jobId',
   status: 'status',
-  appliedAt: 'appliedAt'
+  appliedAt: 'appliedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type ApplicationScalarFieldEnum = (typeof ApplicationScalarFieldEnum)[keyof typeof ApplicationScalarFieldEnum]
@@ -1037,9 +1114,11 @@ export type AIScoreScalarFieldEnum = (typeof AIScoreScalarFieldEnum)[keyof typeo
 export const AvailabilityScalarFieldEnum = {
   id: 'id',
   managerId: 'managerId',
-  date: 'date',
+  dayOfWeek: 'dayOfWeek',
   startTime: 'startTime',
-  endTime: 'endTime'
+  endTime: 'endTime',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type AvailabilityScalarFieldEnum = (typeof AvailabilityScalarFieldEnum)[keyof typeof AvailabilityScalarFieldEnum]
@@ -1048,11 +1127,32 @@ export type AvailabilityScalarFieldEnum = (typeof AvailabilityScalarFieldEnum)[k
 export const InterviewScalarFieldEnum = {
   id: 'id',
   applicationId: 'applicationId',
+  managerId: 'managerId',
   scheduledAt: 'scheduledAt',
-  status: 'status'
+  duration: 'duration',
+  meetingLink: 'meetingLink',
+  notes: 'notes',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type InterviewScalarFieldEnum = (typeof InterviewScalarFieldEnum)[keyof typeof InterviewScalarFieldEnum]
+
+
+export const AIInterviewScalarFieldEnum = {
+  id: 'id',
+  applicationId: 'applicationId',
+  status: 'status',
+  startedAt: 'startedAt',
+  completedAt: 'completedAt',
+  transcript: 'transcript',
+  score: 'score',
+  feedback: 'feedback',
+  createdAt: 'createdAt'
+} as const
+
+export type AIInterviewScalarFieldEnum = (typeof AIInterviewScalarFieldEnum)[keyof typeof AIInterviewScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1198,6 +1298,34 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
 
+
+/**
+ * Reference to a field of type 'InterviewStatus'
+ */
+export type EnumInterviewStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'InterviewStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'InterviewStatus[]'
+ */
+export type ListEnumInterviewStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'InterviewStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'AIInterviewStatus'
+ */
+export type EnumAIInterviewStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AIInterviewStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'AIInterviewStatus[]'
+ */
+export type ListEnumAIInterviewStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AIInterviewStatus[]'>
+    
+
 /**
  * Batch Payload for updateMany & deleteMany & createMany
  */
@@ -1315,6 +1443,7 @@ export type GlobalOmitConfig = {
   aIScore?: Prisma.AIScoreOmit
   availability?: Prisma.AvailabilityOmit
   interview?: Prisma.InterviewOmit
+  aIInterview?: Prisma.AIInterviewOmit
 }
 
 /* Types for Logging */

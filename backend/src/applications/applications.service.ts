@@ -7,6 +7,7 @@ import {
 import { PrismaService } from '../prisma/prisma.service.js';
 import { CreateApplicationDto } from './dto/create-application.dto.js';
 import { AiService } from '../ai/ai.service.js';
+import { UpdateApplicationStatusDto } from '../jobs/dto/update-application-status.dto.js';
 
 @Injectable()
 export class ApplicationsService {
@@ -70,9 +71,19 @@ export class ApplicationsService {
         jobId: job.id,
       },
     });
-   await this.aiService.processApplication(application.id);
-    // AI will be called here
+    await this.aiService.processApplication(application.id);
 
     return application;
+  }
+
+  async updateStatus(id: string, dto: UpdateApplicationStatusDto) {
+    return this.prisma.application.update({
+      where: {
+        id,
+      },
+      data: {
+        status: dto.status,
+      },
+    });
   }
 }

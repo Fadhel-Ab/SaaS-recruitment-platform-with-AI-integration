@@ -5,12 +5,16 @@ import {
   Post,
   UploadedFile,
   UseInterceptors,
+  Patch,
 } from '@nestjs/common';
+import { Roles } from '../auth/decorators/roles.decorator.js';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 import { ApplicationsService } from './applications.service.js';
 import { CreateApplicationDto } from './dto/create-application.dto.js';
 import { multerConfig } from '../common/multer.config.js';
+import { UpdateApplicationStatusDto } from '../jobs/dto/update-application-status.dto.js';
+import { UserRole } from '../generated/prisma/enums.js';
 
 @Controller('applications')
 export class ApplicationsController {
@@ -30,5 +34,14 @@ export class ApplicationsController {
     @Body() dto: CreateApplicationDto,
   ) {
     return this.applicationsService.apply(shareToken, dto);
+  }
+
+  @Patch(':id/status')
+  @Roles(UserRole.MANAGER)
+  updateStatus(
+    @Param('id') id: string,
+    @Body() dto: UpdateApplicationStatusDto,
+  ) {
+    return this.applicationsService.updateStatus(id, dto);
   }
 }

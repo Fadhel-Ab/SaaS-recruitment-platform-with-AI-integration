@@ -17,6 +17,7 @@ model User {
   role         UserRole       @default(CANDIDATE)
   availability Availability[]
   jobs         Job[]
+  interviews   Interview[]
 }
 
 model Job {
@@ -53,6 +54,9 @@ model Application {
   job         Job               @relation(fields: [jobId], references: [id])
   aiScore     AIScore?
   interview   Interview?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  aiinterview AIInterview?
 }
 
 model AIScore {
@@ -70,20 +74,72 @@ model AIScore {
 }
 
 model Availability {
-  id        String   @id @default(uuid())
+  id String @id @default(uuid())
+
   managerId String
-  date      DateTime
+
+  dayOfWeek Int
+  // 0 Sunday
+  // 1 Monday
+  // etc.
+
   startTime String
-  endTime   String
-  manager   User     @relation(fields: [managerId], references: [id])
+
+  endTime String
+
+  manager User @relation(fields: [managerId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
 }
 
 model Interview {
-  id            String      @id @default(uuid())
-  applicationId String      @unique
-  scheduledAt   DateTime
-  status        String      @default("SCHEDULED")
-  application   Application @relation(fields: [applicationId], references: [id])
+  id String @id @default(uuid())
+
+  applicationId String @unique
+
+  managerId String
+
+  scheduledAt DateTime?
+
+  duration Int @default(30)
+
+  meetingLink String?
+
+  notes String?
+
+  status InterviewStatus @default(PENDING)
+
+  application Application @relation(fields: [applicationId], references: [id])
+
+  manager User @relation(fields: [managerId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+}
+
+model AIInterview {
+  id String @id @default(uuid())
+
+  applicationId String @unique
+
+  status AIInterviewStatus @default(NOT_STARTED)
+
+  startedAt DateTime?
+
+  completedAt DateTime?
+
+  transcript String?
+
+  score Int?
+
+  feedback String?
+
+  application Application @relation(fields: [applicationId], references: [id])
+
+  createdAt DateTime @default(now())
 }
 
 enum UserRole {
@@ -93,9 +149,26 @@ enum UserRole {
 
 enum ApplicationStatus {
   PENDING
-  AI_PROCESSING
+  SHORTLISTED
   INTERVIEW_SCHEDULED
   INTERVIEW_COMPLETED
-  REJECTED
+  OFFERED
   HIRED
+  REJECTED
+  WITHDRAWN
+}
+
+enum InterviewStatus {
+  PENDING
+  SCHEDULED
+  COMPLETED
+  CANCELLED
+  NO_SHOW
+}
+
+enum AIInterviewStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETED
+  FAILED
 }

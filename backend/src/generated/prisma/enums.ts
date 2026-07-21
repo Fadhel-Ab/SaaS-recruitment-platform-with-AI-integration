@@ -19,11 +19,34 @@ export type UserRole = (typeof UserRole)[keyof typeof UserRole]
 
 export const ApplicationStatus = {
   PENDING: 'PENDING',
-  AI_PROCESSING: 'AI_PROCESSING',
+  SHORTLISTED: 'SHORTLISTED',
   INTERVIEW_SCHEDULED: 'INTERVIEW_SCHEDULED',
   INTERVIEW_COMPLETED: 'INTERVIEW_COMPLETED',
+  OFFERED: 'OFFERED',
+  HIRED: 'HIRED',
   REJECTED: 'REJECTED',
-  HIRED: 'HIRED'
+  WITHDRAWN: 'WITHDRAWN'
 } as const
 
 export type ApplicationStatus = (typeof ApplicationStatus)[keyof typeof ApplicationStatus]
+
+
+export const InterviewStatus = {
+  PENDING: 'PENDING',
+  SCHEDULED: 'SCHEDULED',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED',
+  NO_SHOW: 'NO_SHOW'
+} as const
+
+export type InterviewStatus = (typeof InterviewStatus)[keyof typeof InterviewStatus]
+
+
+export const AIInterviewStatus = {
+  NOT_STARTED: 'NOT_STARTED',
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED'
+} as const
+
+export type AIInterviewStatus = (typeof AIInterviewStatus)[keyof typeof AIInterviewStatus]

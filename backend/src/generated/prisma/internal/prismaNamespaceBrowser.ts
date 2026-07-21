@@ -57,7 +57,8 @@ export const ModelName = {
   Application: 'Application',
   AIScore: 'AIScore',
   Availability: 'Availability',
-  Interview: 'Interview'
+  Interview: 'Interview',
+  AIInterview: 'AIInterview'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -121,7 +122,9 @@ export const ApplicationScalarFieldEnum = {
   candidateId: 'candidateId',
   jobId: 'jobId',
   status: 'status',
-  appliedAt: 'appliedAt'
+  appliedAt: 'appliedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type ApplicationScalarFieldEnum = (typeof ApplicationScalarFieldEnum)[keyof typeof ApplicationScalarFieldEnum]
@@ -146,9 +149,11 @@ export type AIScoreScalarFieldEnum = (typeof AIScoreScalarFieldEnum)[keyof typeo
 export const AvailabilityScalarFieldEnum = {
   id: 'id',
   managerId: 'managerId',
-  date: 'date',
+  dayOfWeek: 'dayOfWeek',
   startTime: 'startTime',
-  endTime: 'endTime'
+  endTime: 'endTime',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type AvailabilityScalarFieldEnum = (typeof AvailabilityScalarFieldEnum)[keyof typeof AvailabilityScalarFieldEnum]
@@ -157,11 +162,32 @@ export type AvailabilityScalarFieldEnum = (typeof AvailabilityScalarFieldEnum)[k
 export const InterviewScalarFieldEnum = {
   id: 'id',
   applicationId: 'applicationId',
+  managerId: 'managerId',
   scheduledAt: 'scheduledAt',
-  status: 'status'
+  duration: 'duration',
+  meetingLink: 'meetingLink',
+  notes: 'notes',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type InterviewScalarFieldEnum = (typeof InterviewScalarFieldEnum)[keyof typeof InterviewScalarFieldEnum]
+
+
+export const AIInterviewScalarFieldEnum = {
+  id: 'id',
+  applicationId: 'applicationId',
+  status: 'status',
+  startedAt: 'startedAt',
+  completedAt: 'completedAt',
+  transcript: 'transcript',
+  score: 'score',
+  feedback: 'feedback',
+  createdAt: 'createdAt'
+} as const
+
+export type AIInterviewScalarFieldEnum = (typeof AIInterviewScalarFieldEnum)[keyof typeof AIInterviewScalarFieldEnum]
 
 
 export const SortOrder = {

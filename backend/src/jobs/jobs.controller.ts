@@ -27,4 +27,9 @@ export class JobsController {
   findByToken(@Param('token') token: string) {
     return this.jobsService.findByToken(token);
   }
+  @Get(':id/applications')
+  @Roles(UserRole.MANAGER)
+  getApplications(@Param('id') jobId: string) {
+    return this.jobsService.getApplications(jobId);
+  }
 }
