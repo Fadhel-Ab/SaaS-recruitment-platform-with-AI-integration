@@ -1,13 +1,20 @@
-import { Controller, Get, Param, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { CurrentUser } from '../auth/decorators/current-user.decorator.js';
 import { Roles } from '../auth/decorators/roles.decorator.js';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard.js';
 import { UserRole } from '../generated/prisma/enums.js';
 import { JobsService } from './jobs.service.js';
+import { CreateJobDto } from './dto/create-job.dto.js';
 
 @Controller('jobs')
 export class JobsController {
   constructor(private jobsService: JobsService) {}
+
+  @Post()
+  @Roles(UserRole.MANAGER)
+  create(@CurrentUser() user, @Body() dto: CreateJobDto) {
+    return this.jobsService.create(user.id, dto);
+  }
 
   @Get('my')
   @UseGuards(JwtAuthGuard)

@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { OpenAIService } from './openai.service.js';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { ResumeParserService } from './resume-parser.service.js';
-import { join } from 'path';
 import { StorageService } from '../common/storage/storage.service.js';
 
 @Injectable()
@@ -24,31 +23,33 @@ export class AiService {
         job: true,
       },
     });
+
+    if (!application || !application.candidate.resumeFileName) {
+      throw new Error('Application or candidate resume path could not be found.');
+    }
+
     const filePath = this.storage.getResumePath(
-      application!.candidate.resumeFileName!,
+      application.candidate.resumeFileName,
     );
 
+    // 1. Convert resume file to plain text
     const resumeText = await this.parser.extractText(filePath);
 
+    // 2. Fetch the strict JSON response object from the API service
     const analysis = await this.openAI.analyzeResume(
       resumeText,
-      application!.job.description,
+      application.job.description,
     );
 
+    // 3. Map values directly to your database fields 
     await this.prisma.aIScore.create({
       data: {
-        applicationId: application!.id,
-
+        applicationId: application.id,
         cvScore: analysis.score,
-
         overallScore: analysis.score,
-
         strengths: analysis.strengths,
-
         weaknesses: analysis.weaknesses,
-
         summary: analysis.summary,
-
         recommendation: analysis.recommendation,
       },
     });

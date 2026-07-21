@@ -1,59 +1,39 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import OpenAI from 'openai';
+import { GoogleGenAI } from '@google/genai';
 import { buildResumePrompt } from './prompts/resume-analysis.prompt.js';
 import { ResumeAnalysis } from './interfaces/resume-analysis.interface.js';
 
 @Injectable()
 export class OpenAIService {
-  private readonly client: OpenAI;
+  private readonly client: GoogleGenAI;
 
-  constructor(
-    private config: ConfigService,
-  ) {
-    this.client = new OpenAI({
-      apiKey: config.get<string>('OPENAI_API_KEY'),
+  constructor(private config: ConfigService) {
+    this.client = new GoogleGenAI({
+      apiKey: this.config.get<string>('GEMINI_API_KEY'),
     });
   }
 
   async analyzeResume(
-  resume: string,
-  jobDescription: string,
-): Promise<ResumeAnalysis> {
+    resume: string,
+    jobDescription: string,
+  ): Promise<ResumeAnalysis> {
+    const prompt = buildResumePrompt(resume, jobDescription);
 
-  const prompt = buildResumePrompt(
-    resume,
-    jobDescription,
-  );
-
-  const response =
-    await this.client.chat.completions.create({
-      model: 'gpt-4.1-mini',
-
-      messages: [
-        {
-          role: 'user',
-          content: prompt,
-        },
-      ],
-
-      response_format: {
-        type: 'json_object',
+    const response = await this.client.models.generateContent({
+      model: this.config.get<string>('GEMINI_MODEL', 'gemini-3.5-flash'),
+      contents: prompt,
+      config: {
+        responseMimeType: 'application/json',
       },
     });
 
+    const content = response.text;
 
-  const content =
-    response.choices[0].message.content;
+    if (!content) {
+      throw new Error('AI returned empty response');
+    }
 
-
-  if (!content) {
-    throw new Error(
-      'AI returned empty response',
-    );
+    return JSON.parse(content);
   }
-
-
-  return JSON.parse(content);
-}
 }
