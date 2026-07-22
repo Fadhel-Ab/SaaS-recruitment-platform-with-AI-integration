@@ -38,29 +38,61 @@ export class AiInterviewService {
     });
   }
 
-   async complete(dto: CompleteInterviewDto) {
-    const session =
-      await this.prisma.aIInterviewSession.update({
-        where: {
-          id: dto.sessionId,
-        },
-        data: {
-          transcript: dto.transcript,
-          completedAt: new Date(),
-          status: AIInterviewStatus.COMPLETED,
-        },
-      });
+  async complete(dto: CompleteInterviewDto) {
+    const session = await this.prisma.aIInterviewSession.update({
+      where: {
+        id: dto.sessionId,
+      },
+      data: {
+        transcript: dto.transcript,
+        completedAt: new Date(),
+        status: AIInterviewStatus.COMPLETED,
+      },
 
-    const evaluation =
-      await this.aiService.evaluateInterview(
-        dto.transcript,
-      );
+      include: {
+        application: {
+          include: {
+            aiScore: true,
+          },
+        },
+      },
+    });
 
-    console.log(evaluation);
+    const evaluation = await this.aiService.evaluateInterview(dto.transcript);
+
+    const interviewScore =
+      (evaluation.communication +
+        evaluation.technical +
+        evaluation.confidence +
+        evaluation.problemSolving) /
+      4;
+
+    const currentScore = session.application.aiScore;
+
+    if (!currentScore) {
+      throw new Error('AI score does not exist for this application');
+    }
+
+    const overallScore = (currentScore.cvScore + interviewScore) / 2;
+
+    const updatedScore = await this.prisma.aIScore.update({
+      where: {
+        applicationId: session.applicationId,
+      },
+
+      data: {
+        interviewScore,
+
+        overallScore,
+
+        summary: evaluation.summary,
+      },
+    });
 
     return {
       session,
-      evaluation,
+
+      score: updatedScore,
     };
   }
 }
