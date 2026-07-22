@@ -86,4 +86,70 @@ export class ApplicationsService {
       },
     });
   }
+  async getJobApplications(jobId: string) {
+    return this.prisma.application.findMany({
+      where: {
+        jobId,
+      },
+
+      include: {
+        candidate: {
+          select: {
+            id: true,
+            fullName: true,
+            email: true,
+            phone: true,
+          },
+        },
+
+        aiScore: true,
+
+        aiInterview: true,
+      },
+
+      orderBy: {
+        aiScore: {
+          overallScore: 'desc',
+        },
+      },
+    });
+  }
+  async getApplicationDetails(applicationId: string) {
+    const application = await this.prisma.application.findUnique({
+      where: {
+        id: applicationId,
+      },
+
+      include: {
+        candidate: {
+          select: {
+            id: true,
+            fullName: true,
+            email: true,
+            phone: true,
+            resumeFileName: true,
+          },
+        },
+
+        job: {
+          select: {
+            id: true,
+            title: true,
+          },
+        },
+
+        aiScore: true,
+
+        aiInterview: true,
+
+        interview: true,
+      },
+    });
+
+    if (!application) {
+      throw new NotFoundException('Application not found');
+    }
+
+    return application;
+  }
 }

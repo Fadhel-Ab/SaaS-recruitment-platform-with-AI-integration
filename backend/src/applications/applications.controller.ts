@@ -6,6 +6,7 @@ import {
   UploadedFile,
   UseInterceptors,
   Patch,
+  Get,
 } from '@nestjs/common';
 import { Roles } from '../auth/decorators/roles.decorator.js';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -19,6 +20,19 @@ import { UserRole } from '../generated/prisma/enums.js';
 @Controller('applications')
 export class ApplicationsController {
   constructor(private readonly applicationsService: ApplicationsService) {}
+
+  @Get('job/:jobId')
+  getJobApplications(@Param('jobId') jobId: string) {
+    return this.applicationsService.getJobApplications(jobId);
+  }
+
+  @Get(':applicationId')
+  getApplicationDetails(
+    @Param('applicationId')
+    applicationId: string,
+  ) {
+    return this.applicationsService.getApplicationDetails(applicationId);
+  }
 
   @Post('upload')
   @UseInterceptors(FileInterceptor('cvs', multerConfig))
