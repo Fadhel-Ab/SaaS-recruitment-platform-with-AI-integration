@@ -88,6 +88,15 @@ export class AiInterviewService {
         summary: evaluation.summary,
       },
     });
+    await this.prisma.application.update({
+      where: {
+        id: session.applicationId,
+      },
+
+      data: {
+        status: 'INTERVIEW_COMPLETED',
+      },
+    });
 
     return {
       session,
