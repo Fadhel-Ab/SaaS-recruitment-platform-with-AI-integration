@@ -1,50 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/features/auth/presentation/login_screen.dart';
 import 'package:go_router/go_router.dart';
 
 final appRouter = GoRouter(
-
   initialLocation: '/login',
 
   routes: [
-
     GoRoute(
       path: '/login',
 
-      builder: (
-        context,
-        state,
-      ) {
-
-        return const Scaffold(
-          body: Center(
-            child: Text(
-              'Login Screen',
-            ),
-          ),
-        );
-
+      builder: (context, state) {
+        return const LoginScreen();
       },
     ),
 
     GoRoute(
       path: '/dashboard',
 
-      builder: (
-        context,
-        state,
-      ) {
-
-        return const Scaffold(
-          body: Center(
-            child: Text(
-              'Dashboard',
-            ),
-          ),
-        );
-
+      builder: (context, state) {
+        return const Scaffold(body: Center(child: Text('Dashboard')));
       },
     ),
-
   ],
-
 );

@@ -1,24 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/app/app.dart';
-import 'package:frontend/features/auth/data/auth_test.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'app/app.dart';
+
+import 'core/api/dio_client.dart';
+import 'core/storage/token_storage.dart';
+
+import 'features/auth/data/auth_api.dart';
+import 'features/auth/data/auth_repository.dart';
+import 'features/auth/bloc/auth_bloc.dart';
 
 void main() {
-  testLogin();
-  runApp(const RecruitmentApp());
-}
+  final dioClient = DioClient();
 
-/* class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+  final tokenStorage = TokenStorage();
 
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
+  final authApi = AuthApi(dioClient.dio);
+
+  final authRepository = AuthRepository(authApi, tokenStorage);
+
+  runApp(
+    RepositoryProvider.value(
+      value: authRepository,
+
+      child: BlocProvider(
+        create: (_) => AuthBloc(authRepository),
+
+        child: const RecruitmentApp(),
       ),
-    );
-  }
+    ),
+  );
 }
- */
