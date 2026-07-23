@@ -18,6 +18,7 @@ import { RolesGuard } from './auth/guards/roles.guard.js';
 import { StorageModule } from './common/storage/storage.module.js';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard.js';
 import { AiInterviewModule } from './ai-interview/ai-interview.module.js';
+import { DashboardModule } from './dashboard/dashboard.module.js';
 
 ConfigModule.forRoot({
   isGlobal: true,
@@ -40,6 +41,7 @@ ConfigModule.forRoot({
     PrismaModule,
     CommonModule,
     AiInterviewModule,
+    DashboardModule,
   ],
   controllers: [AppController],
   providers: [
