@@ -9,6 +9,7 @@ import * as bcrypt from 'bcrypt';
 import { PrismaService } from '../prisma/prisma.service.js';
 import { LoginDto } from './dto/login.dto.js';
 import { RegisterDto } from './dto/register.dto.js';
+import { LoginResponseDto } from './dto/loginResponse.dto.js';
 
 @Injectable()
 export class AuthService {
@@ -67,15 +68,22 @@ export class AuthService {
     }
 
     const payload = {
-      sub: user.id,
+      id: user.id,
       email: user.email,
       role: user.role,
     };
 
     const accessToken = await this.jwtService.signAsync(payload);
 
-    return {
+    const response: LoginResponseDto = {
       accessToken,
+      user: {
+        id: user.id,
+        email: user.email,
+        role: user.role,
+      },
     };
+
+    return response;
   }
 }

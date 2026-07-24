@@ -1,3 +1,5 @@
+import 'package:frontend/features/auth/data/models/user_model.dart';
+
 import '../../../core/storage/token_storage.dart';
 import 'auth_api.dart';
 
@@ -14,5 +16,11 @@ class AuthRepository {
     await storage.saveToken(result['accessToken']);
 
     return result;
+  }
+
+  Future<UserModel> getCurrentUser(String token) async {
+    final response = await api.getMe(token);
+
+    return UserModel.fromJson(response);
   }
 }

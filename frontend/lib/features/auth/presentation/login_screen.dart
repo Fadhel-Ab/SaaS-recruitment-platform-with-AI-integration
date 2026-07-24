@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/features/auth/data/models/user_role.dart';
+import 'package:go_router/go_router.dart';
 
 import '../bloc/auth_bloc.dart';
 import '../bloc/auth_event.dart';
@@ -19,65 +21,74 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: SizedBox(
-          width: 400,
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, state) {
+        if (state.status == AuthStatus.authenticated) {
+          if (state.user?.role == UserRole.manager) {
+            context.go('/dashboard');
+          } else {
+            context.go('/candidate');
+          }
+        }
 
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+        if (state.status == AuthStatus.failure) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(state.error ?? 'Login failed')),
+          );
+        }
+      },
+      child: Scaffold(
+        body: Center(
+          child: SizedBox(
+            width: 400,
 
-            children: [
-              TextField(
-                controller: emailController,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
 
-                decoration: const InputDecoration(labelText: 'Email'),
-              ),
+              children: [
+                TextField(
+                  controller: emailController,
 
-              const SizedBox(height: 16),
+                  decoration: const InputDecoration(labelText: 'Email'),
+                ),
 
-              TextField(
-                controller: passwordController,
+                const SizedBox(height: 16),
 
-                obscureText: true,
+                TextField(
+                  controller: passwordController,
 
-                decoration: const InputDecoration(labelText: 'Password'),
-              ),
+                  obscureText: true,
 
-              const SizedBox(height: 24),
+                  decoration: const InputDecoration(labelText: 'Password'),
+                ),
 
-              ElevatedButton(
-                onPressed: () {
-                  context.read<AuthBloc>().add(
-                    LoginRequested(
-                      email: emailController.text,
+                const SizedBox(height: 24),
 
-                      password: passwordController.text,
-                    ),
-                  );
-                },
-
-                child: const Text('Login'),
-              ),
-
-              BlocBuilder<AuthBloc, AuthState>(
-                builder: (context, state) {
-                  if (state.status == AuthStatus.loading) {
-                    return const CircularProgressIndicator();
-                  }
-
-                  if (state.status == AuthStatus.failure) {
-                    return Text(state.error ?? 'Error');
-                  }
-
-                  if (state.status == AuthStatus.authenticated) {
-                    return Text('Logged in');
-                  }
-
-                  return const SizedBox();
-                },
-              ),
-            ],
+                BlocBuilder<AuthBloc, AuthState>(
+                  builder: (context, state) {
+                    return ElevatedButton(
+                      onPressed: state.status == AuthStatus.loading
+                          ? null
+                          : () {
+                              context.read<AuthBloc>().add(
+                                LoginRequested(
+                                  email: emailController.text,
+                                  password: passwordController.text,
+                                ),
+                              );
+                            },
+                      child: state.status == AuthStatus.loading
+                          ? const SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            )
+                          : const Text('Login'),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

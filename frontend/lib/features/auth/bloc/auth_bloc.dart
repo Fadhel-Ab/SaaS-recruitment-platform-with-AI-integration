@@ -1,13 +1,17 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/core/storage/token_storage.dart';
+import 'package:frontend/features/auth/data/models/user_model.dart';
 import '../data/auth_repository.dart';
 import 'auth_event.dart';
 import 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository repository;
+  final TokenStorage storage;
 
-  AuthBloc(this.repository) : super(const AuthState()) {
+  AuthBloc(this.repository, this.storage) : super(const AuthState()) {
     on<LoginRequested>(_login);
+    on<AuthStarted>(_checkAuth);
   }
 
   Future<void> _login(LoginRequested event, Emitter<AuthState> emit) async {
@@ -15,16 +19,46 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     try {
       final result = await repository.login(event.email, event.password);
-
+      final user = UserModel.fromJson(result['user']);
       emit(
         state.copyWith(
           status: AuthStatus.authenticated,
-
           token: result['accessToken'],
+          user: user,
         ),
       );
     } catch (e) {
       emit(state.copyWith(status: AuthStatus.failure, error: e.toString()));
+    }
+  }
+
+  Future<void> _checkAuth(AuthStarted event, Emitter<AuthState> emit) async {
+    print('AuthStarted received');
+
+    final token = await storage.getToken();
+    print('Token: $token');
+    if (token == null) {
+      emit(state.copyWith(status: AuthStatus.unauthenticated));
+
+      return;
+    }
+
+    try {
+      final user = await repository.getCurrentUser(token);
+
+      emit(
+        state.copyWith(
+          status: AuthStatus.authenticated,
+          token: token,
+          user: user,
+        ),
+      );
+    } catch (e) {
+      await storage.clear();
+
+      emit(state.copyWith(status: AuthStatus.unauthenticated));
+    } finally {
+      print('Check auth finished');
     }
   }
 }

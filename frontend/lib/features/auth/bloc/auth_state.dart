@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:frontend/features/auth/data/models/user_model.dart';
 
 enum AuthStatus { initial, loading, authenticated, unauthenticated, failure }
 
@@ -7,14 +8,14 @@ class AuthState extends Equatable {
 
   final String? token;
 
-  final String? role;
+  final UserModel? user;
 
   final String? error;
 
   const AuthState({
     this.status = AuthStatus.initial,
     this.token,
-    this.role,
+    this.user,
     this.error,
   });
 
@@ -23,7 +24,7 @@ class AuthState extends Equatable {
 
     String? token,
 
-    String? role,
+    UserModel? user,
 
     String? error,
   }) {
@@ -32,12 +33,12 @@ class AuthState extends Equatable {
 
       token: token ?? this.token,
 
-      role: role ?? this.role,
+      user: user ?? this.user,
 
       error: error ?? this.error,
     );
   }
 
   @override
-  List<Object?> get props => [status, token, role, error];
+  List<Object?> get props => [status, token, user, error];
 }

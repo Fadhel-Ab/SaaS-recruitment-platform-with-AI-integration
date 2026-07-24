@@ -15,4 +15,14 @@ class AuthApi {
 
     return response.data;
   }
+
+  Future<Map<String, dynamic>> getMe(String token) async {
+    final response = await dio.get(
+      '/auth/me',
+
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+    );
+
+    return response.data;
+  }
 }
